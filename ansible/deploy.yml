@@ -1,0 +1,28 @@
+---
+- name: Deploiement Shopping Cart avec Ansible
+  hosts: webservers
+  become: no
+  connection: ssh
+  vars:
+    app_name: shopping-cart
+    app_port: 8070
+  tasks:
+    - name: Afficher le debut du deploiement
+      debug:
+        msg: "Deploiement de {{ app_name }} sur {{ inventory_hostname }}"
+
+    - name: Verifier la connexion au node
+      raw: echo "Node {{ inventory_hostname }} accessible !"
+
+    - name: Verifier le systeme
+      raw: uname -a
+
+    - name: Verifier que Python est disponible
+      raw: python3 --version
+
+    - name: Afficher les infos du node
+      raw: "hostname && whoami"
+
+    - name: Afficher le resultat final
+      debug:
+        msg: "Application {{ app_name }} deployee avec succes sur {{ inventory_hostname }}"
